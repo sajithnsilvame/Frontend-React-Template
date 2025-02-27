@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'; // Import useEffect
+import { useEffect } from 'react'; // Import useEffect
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
