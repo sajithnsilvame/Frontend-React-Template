@@ -25,7 +25,8 @@ export class Container {
     // Register HTTP Client
     this.services.set('IHttpClient', new AxiosHttpClient());
 
-    // Register Repositories
+    // Register Your Repositories
+
     // this.services.set(
     //   'ITodoRepository',
     //   new TodoRepository(this.get<IHttpClient>('IHttpClient'))
@@ -34,7 +35,7 @@ export class Container {
     // Register Repositories - Using Mock Repository
     this.services.set('ITodoRepository', new MockTodoRepository());
 
-    // Register Services
+    // Register Your Services
     this.services.set(
       'ITodoService',
       new TodoService(this.get<ITodoRepository>('ITodoRepository'))
