@@ -1,4 +1,5 @@
-import { ITodoRepository, Todo } from '../Repositories/TodoRepository';
+import { ITodoRepository } from '../Repositories/TodoRepository';
+import { Todo } from '../Types/Todo';
 
 export interface ITodoService {
   getAllTodos(): Promise<Todo[]>;

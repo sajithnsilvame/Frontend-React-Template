@@ -1,4 +1,4 @@
-import axiosInstance from '../../Config/axios';
+import axiosInstance from '../axios';
 import { AxiosError } from 'axios';
 
 export interface IBaseRepository<T> {

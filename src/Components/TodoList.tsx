@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Todo } from '../Repositories/TodoRepository';
+import { Todo } from '../Types/Todo';
 import { getTodoService } from '../DI/Container';
 
 const todoService = getTodoService();
@@ -9,6 +9,7 @@ export const TodoList: React.FC = () => {
   const [newTodoTitle, setNewTodoTitle] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showCompleted, setShowCompleted] = useState(false);
 
   useEffect(() => {
     loadTodos();
@@ -17,15 +18,22 @@ export const TodoList: React.FC = () => {
   const loadTodos = async () => {
     try {
       setLoading(true);
-      const fetchedTodos = await todoService.getAllTodos();
+      const fetchedTodos = showCompleted 
+        ? await todoService.getCompletedTodos()
+        : await todoService.getAllTodos();
       setTodos(fetchedTodos);
       setError(null);
-    } catch (_) {
+    } catch {
       setError('Failed to load todos');
     } finally {
       setLoading(false);
     }
   };
+
+  // Add effect to reload todos when filter changes
+  useEffect(() => {
+    loadTodos();
+  }, [showCompleted]);
 
   const handleAddTodo = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,10 +41,12 @@ export const TodoList: React.FC = () => {
 
     try {
       const newTodo = await todoService.createTodo(newTodoTitle);
-      setTodos([...todos, newTodo]);
+      if (!showCompleted) {
+        setTodos([...todos, newTodo]);
+      }
       setNewTodoTitle('');
       setError(null);
-    } catch (_) {
+    } catch {
       setError('Failed to add todo');
     }
   };
@@ -44,11 +54,18 @@ export const TodoList: React.FC = () => {
   const handleToggleTodo = async (id: number) => {
     try {
       const updatedTodo = await todoService.toggleTodoComplete(id);
-      setTodos(todos.map(todo => 
-        todo.id === id ? updatedTodo : todo
-      ));
+      if (showCompleted) {
+        // If showing only completed, remove the todo if it's uncompleted
+        setTodos(todos.filter(todo => 
+          todo.id === id ? updatedTodo.completed : todo.completed
+        ));
+      } else {
+        setTodos(todos.map(todo => 
+          todo.id === id ? updatedTodo : todo
+        ));
+      }
       setError(null);
-    } catch (_) {
+    } catch {
       setError('Failed to toggle todo');
     }
   };
@@ -58,7 +75,7 @@ export const TodoList: React.FC = () => {
       await todoService.deleteTodo(id);
       setTodos(todos.filter(todo => todo.id !== id));
       setError(null);
-    } catch (_) {
+    } catch {
       setError('Failed to delete todo');
     }
   };
@@ -74,6 +91,18 @@ export const TodoList: React.FC = () => {
           {error}
         </div>
       )}
+
+      <div className="flex items-center mb-4">
+        <label className="flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            checked={showCompleted}
+            onChange={(e) => setShowCompleted(e.target.checked)}
+            className="mr-2"
+          />
+          Show completed only
+        </label>
+      </div>
 
       <form onSubmit={handleAddTodo} className="mb-4">
         <input

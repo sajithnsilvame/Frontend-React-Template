@@ -1,9 +1,10 @@
 import { AxiosHttpClient } from '../Config/Infrastructure/http/AxiosHttpClient';
-import { TodoRepository } from '../Repositories/TodoRepository';
+//import { TodoRepository } from '../Repositories/TodoRepository';
 import { TodoService } from '../Services/TodoService';
 import { IHttpClient } from '../Config/Infrastructure/http/IHttpClient';
 import { ITodoRepository } from '../Repositories/TodoRepository';
 import { ITodoService } from '../Services/TodoService';
+import { MockTodoRepository } from '../Repositories/MockTodoRepository';
 
 export class Container {
   private static instance: Container;
@@ -25,10 +26,13 @@ export class Container {
     this.services.set('IHttpClient', new AxiosHttpClient());
 
     // Register Repositories
-    this.services.set(
-      'ITodoRepository',
-      new TodoRepository(this.get<IHttpClient>('IHttpClient'))
-    );
+    // this.services.set(
+    //   'ITodoRepository',
+    //   new TodoRepository(this.get<IHttpClient>('IHttpClient'))
+    // );
+
+    // Register Repositories - Using Mock Repository
+    this.services.set('ITodoRepository', new MockTodoRepository());
 
     // Register Services
     this.services.set(

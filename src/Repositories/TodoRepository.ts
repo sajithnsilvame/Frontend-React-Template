@@ -1,12 +1,9 @@
-import { IBaseRepository } from './base/BaseRepository';
+import { IBaseRepository } from '../Config/BaseRepo/BaseRepository';
 import { IHttpClient } from '../Config/Infrastructure/http/IHttpClient';
 import { TODO_ENDPOINTS } from '../API/apiEndpoints';
+import { Todo } from '../Types/Todo';
 
-export interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-}
+
 
 export interface ITodoRepository extends IBaseRepository<Todo> {
   toggleComplete(id: number): Promise<Todo>;
