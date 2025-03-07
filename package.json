@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "make:repo": "tsx src/Config/Scripts/makeRepo.ts"
+    "make:repo": "tsx src/Config/Scripts/makeRepo.ts",
+    "make:service": "tsx src/Config/Scripts/makeService.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.9",
