@@ -1,4 +1,4 @@
-import { IProductRepository } from '../Repositories/ProductRepository';
+import { ProductRepository } from '../Repositories/ProductRepository';
 export interface Product {
 id: number;
 // Add your entity properties here
@@ -13,7 +13,7 @@ export interface IProductService {
 }
 
 export class ProductService implements IProductService {
-  constructor(private readonly productRepository: IProductRepository) {}
+  constructor(private readonly productRepository: ProductRepository) {}
 
   async getAllProducts(): Promise<Product[]> {
     return this.productRepository.getAll();

@@ -19,7 +19,7 @@ export interface IProductRepository extends IBaseRepository<Product> {
   // Add your custom repository methods here
 }
 
-export class ProductRepository implements IProductRepository {
+export class ProductRepository implements IBaseRepository<Product> {
   constructor(private readonly httpClient: IHttpClient) {}
 
   async getAll(): Promise<Product[]> {

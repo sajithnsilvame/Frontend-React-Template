@@ -8,7 +8,7 @@ import { MockTodoRepository } from '../Repositories/MockTodoRepository';
 
 export class Container {
   private static instance: Container;
-  private services: Map<string, any> = new Map();
+  private services: Map<string, unknown> = new Map();
 
   private constructor() {
     this.registerServices();

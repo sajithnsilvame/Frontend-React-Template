@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const generateService = async (serviceName: string) => {
-  const template = `import { I${serviceName}Repository } from '../Repositories/${serviceName}Repository';
+  const template = `import { ${serviceName}Repository } from '../Repositories/${serviceName}Repository';
 
 export interface ${serviceName} {
 id: number;
@@ -23,7 +23,7 @@ export interface I${serviceName}Service {
 }
 
 export class ${serviceName}Service implements I${serviceName}Service {
-  constructor(private readonly ${serviceName.toLowerCase()}Repository: I${serviceName}Repository) {}
+  constructor(private readonly ${serviceName.toLowerCase()}Repository: ${serviceName}Repository) {}
 
   async getAll${serviceName}s(): Promise<${serviceName}[]> {
     return this.${serviceName.toLowerCase()}Repository.getAll();
