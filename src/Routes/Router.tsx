@@ -9,6 +9,7 @@ import DashboardPage from '../Pages/DashboardPage';
 import AdminPage from '../Pages/admin/AdminPage';
 import SuperAdminPage from '../Pages/super-admin/SuperAdminPage';
 import UnauthorizedPage from '../Pages/UnauthorizedPage';
+import TodoListPage from '../Pages/TodoListPage';
 
 
 
@@ -19,6 +20,7 @@ const AppRouter = () => (
       <Route path="/" element={<MainLayout />}>
         <Route index element={<PublicPage />} />
         <Route path="login" element={<LoginPage />} />
+        <Route path="todos" element={<TodoListPage />} />
       </Route>
 
       {/* Protected Routes */}
